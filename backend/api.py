@@ -34,7 +34,7 @@ refresh_data(date)
 df_single_day = pd.read_csv(SINGLE_DAY_ECB)
 df_ecb = pd.read_csv(ECB)
 
-df_ecb.info()
+# df_ecb.info()
 # print(df_ecb, df_ecb.describe())
 
 x = df_ecb.to_html()

@@ -1,8 +1,8 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-from backend.api import z
+from api import z
 
 # Your bot token from BotFather
-TOKEN = '7265686775:AAHvlpXuwR53HX7u2TAqxxecAUV2CJxqgRI'
+TOKEN: str = '7265686775:AAHvlpXuwR53HX7u2TAqxxecAUV2CJxqgRI'
 
 
 # Function to handle the /start command
@@ -12,17 +12,22 @@ def start(update, context) -> None:
 # Function to handle text messages
 def handle_message(update, context) -> None:
     user_message = update.message.text
-    if user_message != 'USD':
-        update.message.reply_text(f'You said: {user_message}')
+    if user_message == 'GBP':
+        update.message.reply_text(f'GBP/EUR {z.get(" GBP")[0]}')
+    elif user_message == 'USD':
+        update.message.reply_text(f'USD/EUR {z.get(" USD")[0]}')
+    elif user_message == 'ILS':
+        update.message.reply_text(f'ILS/EUR {z.get(" ILS")[0]}')
     else:
-        update.message.reply_text(f'USD {z[0]}')
+        update.message.reply_text(f'You said: {user_message}')
+        
 
 # Function to handle unknown commands
 def unknown(update, context) -> None:
     update.message.reply_text('Sorry, I didn’t understand that command.')
 
 def main() -> None:
-    print(z)
+    print(z.get(' USD'))
     # Create an Updater object and Dispatcher
     updater = Updater(TOKEN, use_context=True)
     dispatcher = updater.dispatcher

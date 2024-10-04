@@ -16,4 +16,9 @@ def home():
 
 @app.route('/rates')
 def rates():
-    return render_template('my_file.html', z = z.get('Date'), usd = z.get(' USD'))
+    return render_template('my_file.html', 
+                           z = z.get('Date'), 
+                           usd = z.get(' USD'), 
+                           gbp = z.get(' GBP'), 
+                           ils = z.get(' ILS')
+                           )
