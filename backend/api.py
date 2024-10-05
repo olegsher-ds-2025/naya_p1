@@ -22,37 +22,18 @@ def refresh_data(date) -> None:
     print(f'Today is {today} and file from {date}')
     if today is not date: # TODO BUG refactor to get date from remote file
         print('fetching new data...')
-        # fetch_csv() Temporary disabled
+        fetch_csv()
 
 
 
 df_single_day = pd.read_csv(SINGLE_DAY_ECB)
-# df_single_day.info()
 date = df_single_day['Date'][0]
 refresh_data(date)
 
 df_single_day = pd.read_csv(SINGLE_DAY_ECB)
 df_ecb = pd.read_csv(ECB)
 
-# df_ecb.info()
-# print(df_ecb, df_ecb.describe())
 
 x = df_ecb.to_html()
 y = df_ecb.to_json()
 z = df_ecb.to_dict()
-
-
-
-
-
-
-# from currency_converter import CurrencyConverter
-# c = CurrencyConverter()
-# # c.convert(100, 'EUR', 'USD')
-# # print(c.convert(100, 'EUR', 'USD'))
-
-# with open(c.SINGLE_DAY_CURRENCY_FILE) as f:
-#     s = f.read()
-
-
-# print(s)
