@@ -2,14 +2,15 @@ import requests, zipfile, io
 import pandas as pd
 import datetime
 
-ECB = 'eurofxref.csv'
-SINGLE_DAY_ECB = 'eurofxref-hist.csv'
+SINGLE_DAY_ECB = 'eurofxref.csv'
+ECB = 'eurofxref-hist.csv'
 
 today: str =  str(datetime.datetime.today())[:10]
 
 def fetch_csv() -> None:
     ECB_URL = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.zip"
     SINGLE_DAY_ECB_URL = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref.zip"
+    
     r = requests.get(ECB_URL)
     z = zipfile.ZipFile(io.BytesIO(r.content))
     z.extractall(".")
@@ -22,18 +23,26 @@ def refresh_data(date) -> None:
     print(f'Today is {today} and file from {date}')
     if today is not date: # TODO BUG refactor to get date from remote file
         print('fetching new data...')
-        fetch_csv()
+        # fetch_csv()
 
 
+def work_with_frames():
+   return pd.read_csv(ECB)
 
-df_single_day = pd.read_csv(SINGLE_DAY_ECB)
-date = df_single_day['Date'][0]
+
+def work_with_series():
+    return pd.read_csv(SINGLE_DAY_ECB, header=0).squeeze()
+
+
+ds_single_day = work_with_series()
+date = ds_single_day['Date'][0]
 refresh_data(date)
 
-df_single_day = pd.read_csv(SINGLE_DAY_ECB)
-df_ecb = pd.read_csv(ECB)
+
+ds_single_day = work_with_series()
+df_ecb = work_with_frames()
+# Cleaning data
+data_single_day = ds_single_day.replace(' ', None).replace(ds_single_day['Date'], None).dropna().to_dict()
+current_data_day = ds_single_day['Date']
 
 
-x = df_ecb.to_html()
-y = df_ecb.to_json()
-z = df_ecb.to_dict()

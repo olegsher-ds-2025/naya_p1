@@ -1,3 +1,5 @@
-Convert rate 100, 'EUR' == {{ x }}!
-Convert rate 100, 'EUR' == {{ y }}!
+{{ current_data_day }} <hr/>
 
+{% for key, value in data_single_day.items() %}    
+      EUR /{{key}} = {{value}} <br/>    
+{% endfor %}
