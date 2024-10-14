@@ -6,6 +6,7 @@ SINGLE_DAY_ECB = 'eurofxref.csv'
 ECB = 'eurofxref-hist.csv'
 
 today: str =  str(datetime.datetime.today())[:10]
+print(today)
 
 def fetch_csv() -> None:
     ECB_URL = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.zip"
@@ -27,24 +28,37 @@ def refresh_data(date) -> None:
 
 
 def work_with_frames():
-   return pd.read_csv(ECB)
+   x = pd.read_csv(ECB)
+#    print("ECB: ",type(x))
+   return x 
+
+
 
 
 def work_with_series():
-    return pd.read_csv(SINGLE_DAY_ECB, header=0).squeeze()
+    '''
+        The function return Series object, date of object and dictionary
+    '''
+    
+    ds = pd.read_csv(SINGLE_DAY_ECB, header=0).squeeze()
+    ds_to_dict = ds.replace(' ', None).replace(ds['Date'], None).dropna().to_dict()
+    modified_dictionary = {}
+    for key, value in ds_to_dict.items():
+        new_key = key.replace(" ", "")  #removing space between keys
+        modified_dictionary[new_key] = value
+    return ds, ds['Date'], modified_dictionary
 
-# def get_current_data_day():
-#     return ds_single_day['Date']
 
+if '__name__' == '__main__':
 
-if '__init__' == '__main__':
-
-    ds_single_day = work_with_series()
-    date = ds_single_day['Date'][0]
+    ds_single_day = work_with_series()[0]
+    print(ds_single_day)
+    date = work_with_series()[1]
+    print(date)
     refresh_data(date)
 
 
-    ds_single_day = work_with_series()
+    ds_single_day = work_with_series()[0]
     df_ecb = work_with_frames()
     # print(df_ecb.head())
     # print(df_ecb.info())
@@ -52,7 +66,7 @@ if '__init__' == '__main__':
     # print(df_ecb)
     # print(ds_single_day.set_index('Test'))
     # Cleaning data
-    data_single_day = ds_single_day.replace(' ', None).replace(ds_single_day['Date'], None).dropna().to_dict()
+    data_single_day = work_with_series()[2]
     current_data_day = ds_single_day['Date']
     # print(data_single_day.set_index('Test'))
 
