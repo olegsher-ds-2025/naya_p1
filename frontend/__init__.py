@@ -1,9 +1,10 @@
 from flask import Flask, redirect, url_for, request, render_template
-from backend.api import current_data_day, work_with_series
+from backend.api import work_with_series, get_current_data_day
 
 app = Flask(__name__)
 
 data_single_day = work_with_series()
+current_data_day = get_current_data_day()
 
 @app.route('/')
 def home():   
