@@ -34,15 +34,23 @@ def work_with_series():
     return pd.read_csv(SINGLE_DAY_ECB, header=0).squeeze()
 
 
-ds_single_day = work_with_series()
-date = ds_single_day['Date'][0]
-refresh_data(date)
+if '__init__' == '__main__':
+
+    ds_single_day = work_with_series()
+    date = ds_single_day['Date'][0]
+    refresh_data(date)
 
 
-ds_single_day = work_with_series()
-df_ecb = work_with_frames()
-# Cleaning data
-data_single_day = ds_single_day.replace(' ', None).replace(ds_single_day['Date'], None).dropna().to_dict()
-current_data_day = ds_single_day['Date']
+    ds_single_day = work_with_series()
+    df_ecb = work_with_frames()
+    # print(df_ecb.head())
+    # print(df_ecb.info())
+    # df_ecb.set_index('hello', inplace=True)
+    # print(df_ecb)
+    # print(ds_single_day.set_index('Test'))
+    # Cleaning data
+    data_single_day = ds_single_day.replace(' ', None).replace(ds_single_day['Date'], None).dropna().to_dict()
+    current_data_day = ds_single_day['Date']
+    # print(data_single_day.set_index('Test'))
 
 
