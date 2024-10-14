@@ -33,8 +33,8 @@ def work_with_frames():
 def work_with_series():
     return pd.read_csv(SINGLE_DAY_ECB, header=0).squeeze()
 
-def get_current_data_day():
-    return ds_single_day['Date']
+# def get_current_data_day():
+#     return ds_single_day['Date']
 
 
 if '__init__' == '__main__':
