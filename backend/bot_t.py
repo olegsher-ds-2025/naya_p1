@@ -1,8 +1,9 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-from api import z
+from api import work_with_series
 
 # Your bot token from BotFather
 TOKEN: str = '7265686775:AAHvlpXuwR53HX7u2TAqxxecAUV2CJxqgRI'
+z = work_with_series()
 
 
 # Function to handle the /start command
@@ -12,15 +13,15 @@ def start(update, context) -> None:
 # Function to handle text messages
 def handle_message(update, context) -> None:
     user_message = update.message.text
-    if user_message == 'GBP':
-        update.message.reply_text(f'GBP/EUR {z.get(" GBP")[0]}')
-    elif user_message == 'USD':
-        update.message.reply_text(f'USD/EUR {z.get(" USD")[0]}')
-    elif user_message == 'ILS':
-        update.message.reply_text(f'ILS/EUR {z.get(" ILS")[0]}')
-    else:
-        update.message.reply_text(f'You said: {user_message}')
-        
+    # if user_message == 'GBP':
+    #     update.message.reply_text(f'GBP/EUR {z.get(" GBP")[0]}')
+    # elif user_message == 'USD':
+    #     update.message.reply_text(f'USD/EUR {z.get(" USD")[0]}')
+    # elif user_message == 'ILS':
+    #     update.message.reply_text(f'ILS/EUR {z.get(" ILS")[0]}')
+    # else:
+    #     update.message.reply_text(f'You said: {user_message}')
+    update.message.reply_text(f'You said: {user_message}')
 
 # Function to handle unknown commands
 def unknown(update, context) -> None:
